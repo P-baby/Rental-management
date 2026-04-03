@@ -23,6 +23,7 @@ include 'database.php';
 
                 <input type="text" name="firstname" placeholder="First Name" required>
                 <input type="text" name="lastname" placeholder="Last Name" required> <br>
+                <input type="text" name="username" placeholder="Username" required> <br>
                 <input type="email" name="email" placeholder="Email address" required> <br>
                 <input type="password" name="password" placeholder="password" required> <br>
                 <input type="password" name="verify_password" placeholder="verify password" required><br>
@@ -40,8 +41,9 @@ include 'database.php';
 
         <?php
                 if(isset($_POST['signup'])){
-                    $firstname = $_POST['firstname'];
-                    $lastname = $_POST['lastname'];
+                    $firstname = $_POST['first_name'];
+                    $lastname = $_POST['last_name'];
+                    $username = $_POST['username'];
                     $email = $_POST['email'];
                     $password = $_POST['password'];
                     $verify_password = $_POST['verify_password'];
@@ -54,8 +56,8 @@ include 'database.php';
 
                     $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
 
-                    $sql = "INSERT INTO USERS(firstname, lastname, email, password,role)
-                    VALUES('$firstname', '$lastname', '$email', '$password', '$role')";
+                    $sql = "INSERT INTO users(username, first_name, last_name, email, password,role)
+                    VALUES('$username', '$firstname', '$lastname', '$email', '$password', '$role')";
 
                     if(mysqli_query($conn,$sql)){
                         header("location: login.php");
