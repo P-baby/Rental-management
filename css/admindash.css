@@ -1,0 +1,102 @@
+.dashboard_maincontainer {
+    display: flex;
+    height: 100vh;
+}
+.dashboard_sidebar {
+    width: 250px;
+    background-color: #375b4a;
+    color: #fff;
+    padding: 20px;
+}
+.dashboard_userinfo {
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: center;
+}
+.dashboard_sidebar_user {
+    align-self: center;
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: #023217 2px solid;
+    padding-bottom: 20px;
+}
+.dashboard_sidebar_user_image {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+.dashboard_user_role {
+    margin: 0;
+    color: #dce8e0;
+    font-size: 14px;
+}
+.dashboard_sidebar_menu_list {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+}
+.dashboard_sidebar_menu_list li {
+    margin-bottom: 20px;
+}
+.dashboard_sidebar_menu_list li a {
+    color: #ffffffde;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.dashboard_sidebar_menu_list li a:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+.dashboard_sidebar_menu_list li a i {
+    margin-right: 10px;
+}
+.dashboard_sidebar_menu_list li a.menu_active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.18);
+}
+.dashboard_content_container {
+    flex: 1;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+.dashboard__topnav {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.dashboard__topnav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.dashboard_content {
+    background: #fff;
+    height: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+#dashboard_content_main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-content: flex-start;
+    min-height: 100%;
+}
+

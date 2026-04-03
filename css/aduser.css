@@ -1,0 +1,160 @@
+.users-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #036b419b;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.top-bar h2 {
+    margin: 0;
+    color: #1f2937;
+}
+
+.top-bar p {
+    margin: 5px 0 0;
+    color: #5c7973;
+}
+
+.main-btn,
+.save-btn,
+.cancel-btn,
+.edit-btn,
+.delete-btn,
+.close-btn {
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 10px 14px;
+    font-size: 14px;
+}
+
+.main-btn,
+.save-btn {
+    background-color: #2563eb;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #d1d5db;
+    color: #111827;
+}
+
+.edit-btn {
+    background-color: #16a34a;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc2626;
+    color: white;
+}
+
+.close-btn {
+    background-color: #efefef;
+    color: #111827;
+    padding: 8px 12px;
+}
+
+.table-box {
+    background-color: rgba(133, 181, 170, 0.719);
+    border-radius: 8px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.users-table th {
+    background-color: #f9fafb;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.empty-row {
+    text-align: center;
+    color: #6b7280;
+}
+
+/* Popup style */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 999;
+}
+
+.modal-box {
+    background-color: white;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.form-group small {
+    color: #6b7280;
+    display: block;
+    margin-top: 5px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+

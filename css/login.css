@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/login-bg.jpeg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+
+.logincontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.loginheader {
+    font-size: 30px;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(2, 43, 23);
+}
+
+.loginheader p {
+    text-align: center;
+    color: rgba(2, 43, 23, 0.9);
+    font-size: 40px;
+    border-bottom: 5px solid rgb(5, 100, 54);
+}
+
+.loginform {
+    background-color: rgba(60, 80, 71, 0.8);
+    margin: auto;
+    padding: 70px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+input {
+    margin-bottom: 20px;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: rgb(13, 53, 25);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button :hover {
+    background: #86c4a6;
+}
