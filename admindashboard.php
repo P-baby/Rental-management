@@ -63,7 +63,7 @@
                    
                    <?php
                         $user =$conn->query("SELECT count(*) as total_users FROM users")->fetch_assoc()['total_users'];
-                        $equipment =$conn->query("SELECT SUM(quantity) as total_equipment FROM equipments")->fetch_assoc()['total_equipment'];
+                        $equipment =$conn->query("SELECT SUM(quantity) as total_tools FROM tools")->fetch_assoc()['total_tools'];
                         $rental_records =$conn->query("SELECT count(*) as total_rental_records FROM rentals")->fetch_assoc()['total_rental_records'];
                     ?>
                     <div class="dashboard_card_container">

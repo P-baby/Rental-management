@@ -12,21 +12,22 @@ include 'database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
-    $userid = isset($_POST['userid']) ? (int) $_POST['userid'] : 0;
+    $user_id = isset($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
 
-    $firstname = trim($_POST['firstname'] ?? '');
-    $lastname = trim($_POST['lastname'] ?? '');
+    $first_name = trim($_POST['first_name'] ?? '');
+    $last_name = trim($_POST['last_name'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $role = trim($_POST['role'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
     // Add a new user
     if ($action === 'add') {
-        if ($firstname !== '' && $lastname !== '' && $email !== '' && $role !== '' && $password !== '') {
+        if ($first_name !== '' && $last_name !== '' && $username !== '' && $email !== '' && $role !== '' && $password !== '') {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, email, password, role) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssss", $firstname, $lastname, $email, $hashedPassword, $role);
+            $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, username, email, password, role) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $first_name, $last_name, $username, $email, $hashedPassword, $role);
 
             if ($stmt->execute()) {
                 $message = 'User added successfully.';
@@ -44,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Edit an existing user
-    if ($action === 'edit' && $userid > 0) {
-        if ($firstname !== '' && $lastname !== '' && $email !== '' && $role !== '') {
+    if ($action === 'edit' && $user_id > 0) {
+        if ($first_name !== '' && $last_name !== '' && $username !== '' && $email !== '' && $role !== '') {
          if ($stmt->execute()) {
                 $message = 'User updated successfully.';
                 $messageType = 'success';
@@ -62,9 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Delete a user
-    if ($action === 'delete' && $userid > 0) {
-        $stmt = $conn->prepare("DELETE FROM users WHERE userid = ?");
-        $stmt->bind_param("i", $userid);
+    if ($action === 'delete' && $user_id > 0) {
+        $stmt = $conn->prepare("DELETE FROM users WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
 
         if ($stmt->execute()) {
             $message = 'User deleted successfully.';
@@ -80,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 /* Get all users from the database so the table always shows updated data*/
 
-$users = $conn->query("SELECT * FROM users ORDER BY userid DESC");
+$users = $conn->query("SELECT * FROM users ORDER BY user_id DESC");
 ?>
 
 <div class="users-container">
@@ -96,7 +97,7 @@ $users = $conn->query("SELECT * FROM users ORDER BY userid DESC");
             type="button" class="main-btn" onclick="
                 document.getElementById('formTitle').textContent = 'Add User';
                 document.getElementById('action').value = 'add';
-                document.getElementById('userid').value = '';
+                document.getElementById('user_id').value = '';
                 document.getElementById('userForm').reset();
                 document.getElementById('userModal').style.display = 'flex';" > Add User
         </button>
@@ -136,16 +137,21 @@ $users = $conn->query("SELECT * FROM users ORDER BY userid DESC");
                 "
             >
                 <input type="hidden" name="action" id="action" value="add">
-                <input type="hidden" name="userid" id="userid">
+                <input type="hidden" name="user_id" id="user_id">
 
                 <div class="form-group">
-                    <label for="firstname">First Name</label>
-                    <input type="text" name="firstname" id="firstname" required>
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" id="first_name" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" name="lastname" id="lastname" required>
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" id="last_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required>
                 </div>
 
                 <div class="form-group">
@@ -185,6 +191,7 @@ $users = $conn->query("SELECT * FROM users ORDER BY userid DESC");
                     <th>User ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
+                    <th>Username</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th>Actions</th>
@@ -195,9 +202,10 @@ $users = $conn->query("SELECT * FROM users ORDER BY userid DESC");
                 <?php if ($users && $users->num_rows > 0): ?>
                     <?php while ($row = $users->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo (int) $row['userid']; ?></td>
-                            <td><?php echo htmlspecialchars($row['firstname']); ?></td>
-                            <td><?php echo htmlspecialchars($row['lastname']); ?></td>
+                            <td><?php echo (int) $row['user_id']; ?></td>
+                            <td><?php echo htmlspecialchars($row['first_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
                             <td><?php echo htmlspecialchars($row['email']); ?></td>
                             <td><?php echo htmlspecialchars($row['role']); ?></td>
                             <td>
@@ -206,17 +214,19 @@ $users = $conn->query("SELECT * FROM users ORDER BY userid DESC");
                                     <button
                                         type="button"
                                         class="edit-btn"
-                                        data-id="<?php echo (int) $row['userid']; ?>"
-                                        data-firstname="<?php echo htmlspecialchars($row['firstname'], ENT_QUOTES); ?>"
-                                        data-lastname="<?php echo htmlspecialchars($row['lastname'], ENT_QUOTES); ?>"
+                                        data-id="<?php echo (int) $row['user_id']; ?>"
+                                        data-firstname="<?php echo htmlspecialchars($row['first_name'], ENT_QUOTES); ?>"
+                                        data-lastname="<?php echo htmlspecialchars($row['last_name'], ENT_QUOTES); ?>"
+                                        data-username="<?php echo htmlspecialchars($row['username'], ENT_QUOTES); ?>"
                                         data-email="<?php echo htmlspecialchars($row['email'], ENT_QUOTES); ?>"
                                         data-role="<?php echo htmlspecialchars($row['role'], ENT_QUOTES); ?>"
                                         onclick="
                                             document.getElementById('formTitle').textContent = 'Edit User';
                                             document.getElementById('action').value = 'edit';
-                                            document.getElementById('userid').value = this.dataset.id;
-                                            document.getElementById('firstname').value = this.dataset.firstname;
-                                            document.getElementById('lastname').value = this.dataset.lastname;
+                                            document.getElementById('user_id').value = this.dataset.id;
+                                            document.getElementById('first_name').value = this.dataset.firstname;
+                                            document.getElementById('last_name').value = this.dataset.lastname;
+                                            document.getElementById('username').value = this.dataset.username;
                                             document.getElementById('email').value = this.dataset.email;
                                             document.getElementById('role').value = this.dataset.role;
                                             document.getElementById('userModal').style.display = 'flex';"> Edit
@@ -244,7 +254,7 @@ $users = $conn->query("SELECT * FROM users ORDER BY userid DESC");
                                                 }
                                             }); " >
                                         <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="userid" value="<?php echo (int) $row['userid']; ?>">
+                                        <input type="hidden" name="user_id" value="<?php echo (int) $row['user_id']; ?>">
                                         <button type="submit" class="delete-btn">Delete</button>
                                     </form>
                                 </div>
