@@ -31,6 +31,7 @@ include 'database.php';
                 </div>
 
                 <input type="email" name="email" placeholder="Email address" required> <br>
+                <input type="text" name="username" placeholder="Username" required> <br>
                 <input type="password" name="password" placeholder="password" required> <br>
 
                 <button type="submit" name="login">Login</button>
@@ -39,10 +40,11 @@ include 'database.php';
             <?php
            if(isset($_POST['login'])){
              $email = $_POST['email'];
+             $username = $_POST['username'];
              $password = $_POST['password'];
              $role = $_POST['role'];
 
-                $sql = "SELECT * FROM users WHERE email='$email'";
+                $sql = "SELECT * FROM users WHERE email='$email' AND username='$username        '";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows == 1) {
