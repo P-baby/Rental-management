@@ -10,7 +10,7 @@
         $db_server = "localhost";
         $db_user = "root";
         $db_pass = "";
-        $db_name = "equipment";
+        $db_name = "field";
         $conn = "";
 
         $conn =mysqli_connect(   $db_server,
