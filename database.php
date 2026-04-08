@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>database</title>
-</head>
-<body>
-    <?php
-        $db_server = "localhost";
-        $db_user = "root";
-        $db_pass = "";
-        $db_name = "field";
-        $conn = "";
+<?php
+// Simple shared database connection.
+$db_server = "localhost";
+$db_user = "root";
+$db_pass = "";
+$db_name = "field";
 
-        $conn =mysqli_connect(   $db_server,
-                                 $db_user,
-                                  $db_pass,
-                                  $db_name);
-        if($conn){
-            echo "connection successful!!!";
-        }
-        else{
-            echo "unsucessful connection";
-        }                        
-    ?>
-    
-</body>
-</html>
+$conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
+
+if (!$conn) {
+    die("Database connection failed.");
+}
+
+mysqli_set_charset($conn, "utf8mb4");
