@@ -1,0 +1,36 @@
+.adequipment_container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0f8f2b98;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.equipment_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.equipment_table th, .equipment_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.equipment_table th {
+    background-color: #f2f2f2;
+}
+.edit_btn, .delete_btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.edit_btn {
+    background-color: #4CAF50;
+    color: white;
+}
+.delete_btn {
+    background-color: #f44336;
+    color: white;
+}

@@ -35,7 +35,7 @@
                         <a href="#" onclick="loadPage('dashboard_ahome.php')" class="fas fa-dashboard">Dashboard</a>
                     </li>
                     <li>
-                        <a href="#" onclick="loadPage('user.php')" class="fas fa-users">Users</a>
+                        <a href="#" onclick="loadPage('aduser.php')" class="fas fa-users">Users</a>
                     </li>
                     <li>
                         <a href="#" onclick="loadPage('adequipment.php')" class="fas fa-wrench">Equipment</a>
