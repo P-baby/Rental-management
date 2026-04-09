@@ -1,0 +1,73 @@
+.wrapper {
+     background-image: url('../images/login-bg.jpeg');
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.form-wrapper {
+    background-color: #117d4bb3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+.form-wrapper h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+}
+.btn-group {
+    width: 100%;
+}
+.btn-primary {
+    background-color: #0f8638d2;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+.btn-primary:hover {
+    background-color: #043d10;
+}
+.btn-secondary {
+    background-color: transparent;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+}
+.btn-secondary:hover {
+    background-color: #031b0c;
+}
+.edit-btn {
+    background-color: #0f8638d2;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.edit-btn:hover {
+    background-color: #043d10;
+}
