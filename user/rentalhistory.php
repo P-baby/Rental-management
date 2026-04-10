@@ -34,6 +34,12 @@ $stmt->close();
         <h1>Rental History</h1>
         <?php if (count($rental_history) > 0): ?>
             <div class="rentals_list">
+                <!--inside each rental tool-->
+                <p> status: <?php if (!$rental ['return_date'] && strtotime($rental['due_date']) < time()) {
+                    echo "<span style='color: red;'>Overdue</span>";
+                } else {
+                    echo $rental['return_date'] ? "<span style='color: green;'>Returned</span>" : "<span style='color: orange;'>Not returned yet</span>";
+                } ?></p>
                 <?php foreach ($rental_history as $rental): ?>
                     <div class="rental_item">
                         <img src="../images/<?php echo htmlspecialchars($rental['image']); ?>" alt="<?php echo htmlspecialchars($rental['tool_name']); ?>" class="rental_image">
@@ -42,6 +48,7 @@ $stmt->close();
                         <p>Due on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_date']))); ?></p>
                         <p>Returned on: <?php echo $rental['return_date'] ? htmlspecialchars(date("F j, Y", strtotime($rental['return_date']))) : 'Not returned yet'; ?></p>
                     </div>
+                    <!--end of each rental tool-->
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
