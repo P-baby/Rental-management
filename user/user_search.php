@@ -20,6 +20,16 @@ while ($stmt->fetch()) {
     ];
 }
 $stmt->close();
+
+//fetch categories for dropdown
+$categories_query = "SELECT DISTINCT category FROM tools";
+$categories_result = $conn->query($categories_query);
+$categories = [];
+if ($categories_result->num_rows > 0) {
+    while ($row = $categories_result->fetch_assoc()) {
+        $categories[] = $row['category'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,10 +48,19 @@ $stmt->close();
                     <li>
                         <img src="<?php echo $result['image']; ?>" alt="<?php echo $result['tool_name']; ?>" width="100">
                         <p><?php echo $result['tool_name']; ?></p>
-                        <p>Rental Date: <?php echo $result['rental_date']; ?></p>
-                        <p>Due Date: <?php echo $result['due_date']; ?></p>
-                        <p>Return Date: <?php echo $result['return_date'] ? $result['return_date'] : 'Not returned yet'; ?></p>
+                        
                     </li>
+
+                    <form method="GET" action="user_search.php">
+                        <input type="hidden" name="search" placeholder="Search Equipment" value="<?php echo $result['tool_name']; ?>">
+                        <select name="category">
+                            <option value="">Select category</option>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo htmlspecialchars($category); ?>"><?php echo htmlspecialchars($category); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit">Rent this tool</button>
+                    </form>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>

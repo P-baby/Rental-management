@@ -39,52 +39,6 @@ $stmt->bind_result($overdue_count);
 $stmt->fetch();
 $stmt->close();
 
-//search and filter queries
-
-$filter_query = "SELECT t.name, t.image, r.rental_date, r.due_date, r.return_date FROM rentals r JOIN tools t ON r.tool_id = t.tool_id WHERE r.user_id = ? AND r.rental_date >= ? AND r.rental_date <= ?";
-$stmt = $conn->prepare($filter_query);  
-$stmt->bind_param("iss", $user_id, $_GET['start_date'], $_GET['end_date']);
-$stmt->execute();
-$stmt->bind_result($tool_name, $image, $rental_date, $due_date, $return_date);
-$filter_results = [];
-while ($stmt->fetch()) {
-    $filter_results[] = [
-        'tool_name' => $tool_name,
-        'image' => $image,
-        'rental_date' => $rental_date,
-        'due_date' => $due_date,
-        'return_date' => $return_date
-    ];
-}
-$stmt->close();
-
-$tools_query = "SELECT t.name, t.image, r.rental_date, r.due_date, r.return_date FROM rentals r JOIN tools t ON r.tool_id = t.tool_id WHERE r.user_id = ?";
-$stmt = $conn->prepare($tools_query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$stmt->bind_result($tool_name, $image, $rental_date, $due_date, $return_date);
-$tools = [];
-while ($stmt->fetch()) {
-    $tools[] = [
-        'tool_name' => $tool_name,
-        'image' => $image,
-        'rental_date' => $rental_date,
-        'due_date' => $due_date,
-        'return_date' => $return_date
-    ];
-}
-$stmt->close();
-
-//unique categories for filter dropdown
-$categories_query = "SELECT DISTINCT category FROM tools";
-$result = $conn->query($categories_query);
-$categories = [];
-while ($row = $result->fetch_assoc()) {
-    $categories[] = $row['category'];
-}
-$result->free();
- 
-
 ?>  
 <!DOCTYPE html>
 <html lang="en">
