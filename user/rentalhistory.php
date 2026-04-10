@@ -30,6 +30,24 @@ $stmt->close();
     <title>Rental History</title>
 </head>
 <body>
-    
+    <div class="userdashboard_content" id="content_area">
+        <h1>Rental History</h1>
+        <?php if (count($rental_history) > 0): ?>
+            <div class="rentals_list">
+                <?php foreach ($rental_history as $rental): ?>
+                    <div class="rental_item">
+                        <img src="../images/<?php echo htmlspecialchars($rental['image']); ?>" alt="<?php echo htmlspecialchars($rental['tool_name']); ?>" class="rental_image">
+                        <h3><?php echo htmlspecialchars($rental['tool_name']); ?></h3>
+                        <p>Rented on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rental_date']))); ?></p>
+                        <p>Due on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_date']))); ?></p>
+                        <p>Returned on: <?php echo $rental['return_date'] ? htmlspecialchars(date("F j, Y", strtotime($rental['return_date']))) : 'Not returned yet'; ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p>No rental history found.</p>
+        <?php endif; ?>
+    </div>
+
 </body>
 </html>
