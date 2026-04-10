@@ -1,0 +1,16 @@
+<?php
+include 'connection.php';
+
+//due_soon.php
+session_start();
+$user_id = $_SESSION['user_id'];
+$due_soon_query = "SELECT COUNT(*) AS due_soon_count FROM rentals WHERE user_id = ? AND return_date IS NULL AND due_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+$stmt = $conn->prepare($due_soon_query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$stmt->bind_result($due_soon_count);
+$stmt->fetch();
+$stmt->close();
+
+header('Content-Type: application/json');
+echo json_encode(['due_soon' => $due_soon_count]);

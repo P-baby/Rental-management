@@ -49,6 +49,16 @@ $stmt->close();
     <link rel="stylesheet" href="../css/userdashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        fetch('due_soon.php')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.due_soon > 0) {
+                    document.querySelector('.topnav_right').innerHTML += `<span class="due_soon_alert">${data.due_soon} items due soon</span>`;
+                }
+            });
+    </script>
 </head>
 <body>
     <div class="userdashboard_maincontainer">

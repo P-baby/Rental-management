@@ -32,6 +32,12 @@ $stmt->close();
 <body>
     <div class="userdashboard_content" id="content_area">
         <h1>Current Rentals</h1>
+
+        <!--inside each rental item button to return the tool-->
+        <form method="POST" action="return_tool.php">
+            <input type="hidden" name="tool_id" value="<?php echo htmlspecialchars($rental['tool_id']); ?>">
+            <button type="submit">Return this tool</button>
+        </form>
         <?php if (count($current_rentals) > 0): ?>
             <div class="rentals_list">
                 <?php foreach ($current_rentals as $rental): ?>
@@ -40,10 +46,16 @@ $stmt->close();
                         <h3><?php echo htmlspecialchars($rental['tool_name']); ?></h3>
                         <p>Rented on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rental_date']))); ?></p>
                         <p>Due on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_date']))); ?></p>
+                        <form method="POST" action="return_tool.php">
+                            <input type="hidden" name="tool_id" value="<?php echo htmlspecialchars($rental['tool_id']); ?>">
+                            <button type="submit">Return this tool</button>
+                        </form>
                     </div>
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
+            <p>No current rentals found.</p>
+        <?php endif; ?>
             <p>No current rentals found.</p>
         <?php endif; ?>
 

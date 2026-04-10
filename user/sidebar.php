@@ -16,9 +16,11 @@
             <div class="userdashboard_sidebar_menu">
                 <ul class="userdashboard_sidebar_menu_list">
                     <li><a href="#" onclick="loadPage('userdashboard.php')" class="fas fa-dashboard">Dashboard</a></li>
-                    <li><a href="#" onclick="loadPage('user_search.php')" class="fas fa-search">Search and rent</a></li>
+                    <li><a href="#" onclick="loadPage('user_search.php')" class="fas fa-search">Search equipments</a></li>
+                    <li ><a href="#" onclick="loadPage('rent.php')" class="fas fa-shopping-cart">Rent Equipment</a></li>
                     <li><a href="#" onclick="loadPage('currentrentals.php')" class="fas fa-wrench">Current rentals</a></li>
                     <li><a href="#" onclick="loadPage('rentalhistory.php')" class="fas fa-history">Rental history</a></li>
+                    <li><a href="#" onclick="loadPage('accountsettings.php')" class="fas fa-user">Profile</a></li>
                     <li><a href="../logout.php" class="fas fa-power-off">Logout</a></li>
                 </ul>
             </div>
