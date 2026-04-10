@@ -2,6 +2,7 @@
 .dashboard_maincontainer {
     display: flex;
     height: 100vh;
+    flex-direction: column;
 }
 
 .dashboard_sidebar {
@@ -9,8 +10,10 @@
     background-color: #375b4a;
     color: #fff;
     padding: 20px;
-    overflow-y: auto;
-    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
     border-right: #023217 2px solid;
 }
 
