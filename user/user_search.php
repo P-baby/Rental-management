@@ -27,12 +27,12 @@
 include 'connection.php';
 
 //SQL query to fetch search results based on user input
-$search_query = "SELECT tool_id, tool_name, image, rental_date, due_date, return_date FROM rentals r JOIN tools t ON r.tool_id = t.tool_id WHERE r.user_id = ? AND (t.name LIKE ? OR r.rental_date LIKE ? OR r.due_date LIKE ?)";
+$search_query = "SELECT tool_id, tool_name, image, rental_date, due_date, return_datetime FROM rentals r JOIN tools t ON r.tool_id = t.tool_id WHERE r.user_id = ? AND (t.name LIKE ? OR r.rental_date LIKE ? OR r.due_datetime LIKE ?)";
 $stmt = $conn->prepare($search_query);
 $search_term = '%' . $_GET['search'] . '%';
 $stmt->bind_param("isss", $user_id, $search_term, $search_term, $search_term);
 $stmt->execute();
-$stmt->bind_result($tool_id, $tool_name, $image, $rental_date, $due_date, $return_date);
+$stmt->bind_result($tool_id, $tool_name, $image, $rental_date, $due_datetime, $return_datetime);
 $search_results = [];
 while ($stmt->fetch()) {
     $search_results[] = [
@@ -40,8 +40,8 @@ while ($stmt->fetch()) {
         'tool_name' => $tool_name,
         'image' => $image,
         'rental_date' => $rental_date,
-        'due_date' => $due_date,
-        'return_date' => $return_date
+        'due_date' => $due_datetime,
+        'return_date' => $return_datetime
     ];
 }
 $stmt->close();

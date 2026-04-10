@@ -6,8 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tool_id'])) {
     $tool_id = $_POST['tool_id'];
     $user_id = $_SESSION['user_id'];
 
-    // Update the rentals table to set return_date to current date for the specific tool and user
-    $update_query = "UPDATE rentals SET return_date = CURDATE() WHERE user_id = ? AND tool_id = ? AND return_date IS NULL";
+    // Update the rentals table to set return_datetime to current date for the specific tool and user
+    $update_query = "UPDATE rentals SET return_datetime = CURDATE() WHERE user_id = ? AND tool_id = ? AND return_datetime IS NULL";
     $stmt = $conn->prepare($update_query);
     $stmt->bind_param("ii", $user_id, $tool_id);
     if ($stmt->execute()) {

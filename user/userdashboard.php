@@ -1,45 +1,46 @@
 <?php
-
 session_start();
 include 'connection.php';
 
-//get user id from session
+// Get user id from session
 $user_id = $_SESSION['user_id'];
+
 // Fetch user information
-$user_query = "SELECT email FROM users WHERE user_id = ?";
+$user_query = "SELECT email, first_name FROM users WHERE user_id = ?";
 $stmt = $conn->prepare($user_query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$stmt->bind_result($email);
+$stmt->bind_result($email, $first_name);
 $stmt->fetch();
 $stmt->close();
 
-//card queries
-$available = "SELECT COUNT(*) FROM rentals WHERE user_id = ? AND return_date IS NULL"->fetch_assoc()['available_count'];
-$stmt = $conn->prepare($available);
+// Get current active rentals (not yet returned)
+$active_sql = "SELECT COUNT(*) FROM rentals WHERE user_id = ? AND return_datetime IS NULL";
+$stmt = $conn->prepare($active_sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$stmt->bind_result($available_count);
+$stmt->bind_result($active_count);
 $stmt->fetch();
 $stmt->close();
 
-$total_rentals = "SELECT COUNT(*) FROM rentals WHERE user_id = ?")->fetch_assoc()['total_rentals'];
-$stmt = $conn->prepare($total_rentals);
+// Get total rentals for user
+$total_sql = "SELECT COUNT(*) FROM rentals WHERE user_id = ?";
+$stmt = $conn->prepare($total_sql);
 $stmt->bind_param("i", $user_id);
-$stmt->execute();   
+$stmt->execute();
 $stmt->bind_result($total_rentals_count);
-$stmt->fetch(); 
+$stmt->fetch();
 $stmt->close();
 
-$overdue = "SELECT COUNT(*) FROM rentals WHERE user_id = ? AND return_date IS NULL AND due_date < CURDATE()")->fetch_assoc()['overdue_count'];
-$stmt = $conn->prepare($overdue);
+// Get overdue rentals (not returned and due passed)
+$overdue_sql = "SELECT COUNT(*) FROM rentals WHERE user_id = ? AND return_datetime IS NULL AND due_datetime < NOW()";
+$stmt = $conn->prepare($overdue_sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $stmt->bind_result($overdue_count);
 $stmt->fetch();
 $stmt->close();
-
-?>  
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

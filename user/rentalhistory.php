@@ -5,19 +5,19 @@ include 'connection.php';
 $user_id = $_SESSION['user_id'];
 
 //fetch rental history for this current user
-$rental_history_query = "SELECT t.name, t.image, r.rental_date, r.due_date, r.return_date FROM rentals r JOIN tools t ON r.tool_id = t.tool_id WHERE r.user_id = ?";
+$rental_history_query = "SELECT t.name, t.image, r.rent_datetime, r.due_datetime, r.return_datetime FROM rentals r JOIN tools t ON r.tool_id = t.tool_id WHERE r.user_id = ?";
 $stmt = $conn->prepare($rental_history_query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$stmt->bind_result($tool_name, $image, $rental_date, $due_date, $return_date);
+$stmt->bind_result($tool_name, $image, $rent_datetime, $due_datetime, $return_datetime);
 $rental_history = [];
 while ($stmt->fetch()) {
     $rental_history[] = [
         'tool_name' => $tool_name,
         'image' => $image,
-        'rental_date' => $rental_date,
-        'due_date' => $due_date,
-        'return_date' => $return_date
+        'rent_datetime' => $rent_datetime,
+        'due_datetime' => $due_datetime,
+        'return_datetime' => $return_datetime
     ];
 }
 $stmt->close();
@@ -35,18 +35,18 @@ $stmt->close();
         <?php if (count($rental_history) > 0): ?>
             <div class="rentals_list">
                 <!--inside each rental tool-->
-                <p> status: <?php if (!$rental ['return_date'] && strtotime($rental['due_date']) < time()) {
+                <p> status: <?php if (!$rental ['return_datetime'] && strtotime($rental['due_datetime']) < time()) {
                     echo "<span style='color: red;'>Overdue</span>";
                 } else {
-                    echo $rental['return_date'] ? "<span style='color: green;'>Returned</span>" : "<span style='color: orange;'>Not returned yet</span>";
+                    echo $rental['return_datetime'] ? "<span style='color: green;'>Returned</span>" : "<span style='color: orange;'>Not returned yet</span>";
                 } ?></p>
                 <?php foreach ($rental_history as $rental): ?>
                     <div class="rental_item">
                         <img src="../images/<?php echo htmlspecialchars($rental['image']); ?>" alt="<?php echo htmlspecialchars($rental['tool_name']); ?>" class="rental_image">
                         <h3><?php echo htmlspecialchars($rental['tool_name']); ?></h3>
-                        <p>Rented on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rental_date']))); ?></p>
-                        <p>Due on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_date']))); ?></p>
-                        <p>Returned on: <?php echo $rental['return_date'] ? htmlspecialchars(date("F j, Y", strtotime($rental['return_date']))) : 'Not returned yet'; ?></p>
+                        <p>Rented on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rent_datetime']))); ?></p>
+                        <p>Due on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_datetime']))); ?></p>
+                        <p>Returned on: <?php echo $rental['return_datetime'] ? htmlspecialchars(date("F j, Y", strtotime($rental['return_datetime']))) : 'Not returned yet'; ?></p>
                     </div>
                     <!--end of each rental tool-->
                 <?php endforeach; ?>
