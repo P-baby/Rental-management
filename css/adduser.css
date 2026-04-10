@@ -7,7 +7,7 @@
     height: 100vh;
 }
 .form-wrapper {
-    background-color: #117d4bb3;
+    background-color: #3e5d4eb3;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -33,6 +33,12 @@
 }
 .btn-group {
     width: 100%;
+}
+.btn{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
 }
 .btn-primary {
     background-color: #0f8638d2;

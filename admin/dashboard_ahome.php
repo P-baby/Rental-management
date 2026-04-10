@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title><link rel="stylesheet" href="css/dashboard_ahome.css">
+    <title>Document</title><link rel="stylesheet" href="../css/dashboard_ahome.css">
 </head>
 <body>
     <?php
-include 'database.php';
+include __DIR__ . '/database.php';
 
 $user =$conn->query("SELECT count(*) as total_users FROM users")->fetch_assoc()['total_users'];
-$equipment =$conn->query("SELECT SUM(quantity) as total_equipment FROM tools")->fetch_assoc()['total_equipments'];
+$equipment =$conn->query("SELECT SUM(quantity) as total_tools FROM tools")->fetch_assoc()['total_tools'];
 $rental_records =$conn->query("SELECT count(*) as total_rental_records FROM rentals")->fetch_assoc()['total_rental_records'];
 ?>
 <div class="dashboard_card_container">

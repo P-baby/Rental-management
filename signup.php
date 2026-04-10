@@ -1,5 +1,33 @@
 <?php
-include 'database.php';
+include __DIR__ . '/admin/database.php';
+
+$signupError = '';
+
+if (isset($_POST['signup'])) {
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $verify_password = $_POST['verify_password'];
+    $role = $_POST['role'];
+
+    if ($password !== $verify_password) {
+        $signupError = "Passwords do not match.";
+    } else {
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "INSERT INTO users(username, first_name, last_name, email, password, role)
+                VALUES('$username', '$first_name', '$last_name', '$email', '$passwordHash', '$role')";
+
+        if (mysqli_query($conn, $sql)) {
+            header("Location: login.php");
+            exit();
+        }
+
+        $signupError = "Error: " . mysqli_error($conn);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +43,7 @@ include 'database.php';
 <body>
 
     <div class="card">
-        <h1>sign up</h1>
+        <h1>Register</h1>
         <p>Have An Account?<a href="login.php">Click Here To login</a></p>
 
         <form action="signup.php" method="post">
@@ -40,30 +68,8 @@ include 'database.php';
         </form>
 
         <?php
-                if(isset($_POST['signup'])){
-                    $first_name = $_POST['first_name'];
-                    $last_name = $_POST['last_name'];
-                    $username = $_POST['username'];
-                    $email = $_POST['email'];
-                    $password = $_POST['password'];
-                    $verify_password = $_POST['verify_password'];
-                    $role = $_POST['role'];
-
-                    if($password != $verify_password){
-                        echo "passwords does not match!";
-                        exit();
-                    }
-
-                    $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
-
-                    $sql = "INSERT INTO users(username, first_name, last_name, email, password,role)
-                    VALUES('$username', '$first_name', '$last_name', '$email', '$password', '$role')";
-
-                    if(mysqli_query($conn,$sql)){
-                        header("location: login.php");
-                         exit();
-                        echo "error:" . mysqli_error($conn);
-                    }
+                if ($signupError !== '') {
+                    echo "<p>$signupError</p>";
                 }
             ?>
     </div>

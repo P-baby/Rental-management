@@ -1,5 +1,43 @@
 <?php
-include 'database.php';
+session_start();
+include __DIR__ . '/admin/database.php';
+
+$loginError = '';
+
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+    $role = $_POST['role'];
+
+    $sql = "SELECT * FROM users WHERE email='$email' AND username='$username'";
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows === 1) {
+        $row = mysqli_fetch_assoc($result);
+
+        if (password_verify($password, $row['password'])) {
+            if ($role === $row['role']) {
+                $_SESSION['user_id'] = $row['user_id'];
+                $_SESSION['first_name'] = $row['first_name'];
+                $_SESSION['role'] = $row['role'];
+
+                if ($row['role'] === "admin") {
+                    header("Location: admin/admindashboard.php");
+                } else {
+                    header("Location: user/userdashboard.php");
+                }
+                exit();
+            }
+
+            $loginError = "Role mismatch.";
+        } else {
+            $loginError = "Incorrect password.";
+        }
+    } else {
+        $loginError = "Invalid email or username.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,42 +76,8 @@ include 'database.php';
             </form>
 
             <?php
-           if(isset($_POST['login'])){
-             $email = $_POST['email'];
-             $username = $_POST['username'];
-             $password = $_POST['password'];
-             $role = $_POST['role'];
-
-                $sql = "SELECT * FROM users WHERE email='$email' AND username='$username        '";
-                $result = $conn->query($sql);
-
-                if ($result->num_rows == 1) {
-                    $row = mysqli_fetch_assoc($result);
-
-                if (password_verify($password,$row['password'])){
-
-                if($role ==$row['role']){
-                    $_SESSION['userid'] = $row['userid'];
-                    $_SESSION['firstname'] = $row['firstname'];
-                    $_SESSION['ProfilePicture'] = $row['ProfilePicture'];
-                    $_SESSION['role'] = $row['role'];
-
-                if($row['role'] =="admin"){
-                    header("location:admindashboard.php");
-                }
-                else{
-                    header("location:user/userdashboard.php");
-                }
-                exit();
-                }
-                else{
-                echo "role mismatch";
-                }
-                }
-                else{
-                echo"inccorect password";
-                }
-            }    
+           if ($loginError !== '') {
+                echo "<p>$loginError</p>";
            }
         ?>
         </div>

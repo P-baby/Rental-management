@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel ="stylesheet" href="css/aduser.css">
+    <link rel="stylesheet" href="../css/usera.css">
 </head>
 <body>
     <div class="container">
-       <h2>User management</h2>
+       <h2 class="user-management">User management</h2>
        <a href="adduser.php" class="btn-add">Add user</a>
 
-       <table class="table table-striped">
+       <table class="user_table">
            <thead>
                <tr>
                    <th>User ID</th>
@@ -25,7 +25,7 @@
            </thead>
            <tbody>
                <?php
-                    include 'database.php';
+                    include __DIR__ . '/database.php';
                     $sql = "SELECT * FROM users";
                     $result = mysqli_query($conn, $sql);
                     if(mysqli_num_rows($result) > 0){
