@@ -107,7 +107,7 @@ $stmt->close();
             <p>&copy; 2026 FieldGear. All rights reserved.</p>
         </div>
     </div>
-
+    <div id="toast"></div>
 
  <!-- JavaScript for AJAX content loading -->
     <script>
@@ -123,6 +123,77 @@ $stmt->close();
                 }
             };
             xhr.send();
+        }
+        //ajax for rent.php in content area
+        document.addEventListener('submit', function(e) {
+            if (e.target && e.target.id === 'rentForm') {
+                e.preventDefault();
+                const form = e.target;
+                const tool_id = form.querySelector('input[name="tool_id"]').value;
+
+                fetch('rent.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({ tool_id }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showToast(data.message, data.success ? 'success' : 'error'  );
+                    if (data.success) {
+                        //remove the card
+                        form.closest('.rent_confirm_card').remove();
+                        // Refresh current rentals list
+                        loadPage('currentrentals.php');
+                    } else {
+                        showToast(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('An error occurred while processing your rental.');
+                });
+            }
+        });
+
+        //ajax for return_form in content area
+        document.addEventListener('submit', function(e) {
+            if (e.target && e.target.classList.contains('return_form')) {
+                e.preventDefault();
+                const form = e.target;
+                const tool_id = form.querySelector('input[name="tool_id"]').value;
+
+                fetch('return_tool.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({ tool_id }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(data.message);
+                        // Refresh current rentals list
+                        loadPage('currentrentals.php');
+                    } else {
+                        showToast(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('An error occurred while returning the tool.');
+                });
+            }
+        });
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', function() {

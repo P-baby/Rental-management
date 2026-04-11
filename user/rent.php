@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         <form method="POST" action="rent.php" id="rentForm" style="margin-top:18px;">
             <input type="hidden" name="tool_id" value="<?php echo (int)$tool_id; ?>">
             <button type="submit" class="confirm_button">Yes, Rent this tool</button>
-            <button type="button" onclick="window.history.back();" class="cancel_button">Cancel</button>
+            <button type="button" onclick="window.location.href='userdashboard.php';" class="cancel_button">Cancel</button>
         </form>
         <div id="rentResult"></div>
     </div>

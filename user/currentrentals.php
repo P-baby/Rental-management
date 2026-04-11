@@ -37,6 +37,7 @@ $stmt->close();
 <h1>Current Rentals</h1>
 
 <?php if (!empty($current_rentals)): ?>
+    <div id="rentals_container">
     <table class="rentals_table">
         <thead>
             <tr>
@@ -59,7 +60,7 @@ $stmt->close();
                 <td><?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rent_datetime']))); ?></td>
                 <td><?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_datetime']))); ?></td>
                 <td>
-                    <form method="POST" action="return_tool.php" class="return_form">
+                    <form method="POST" action="#" class="return_form">
                         <input type="hidden" name="tool_id" value="<?php echo (int)$rental['tool_id']; ?>">
                         <button type="submit" class="return_btn">Return</button>
                     </form>
@@ -68,6 +69,9 @@ $stmt->close();
         <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
 <?php else: ?>
     <p>No current rentals found.</p>
 <?php endif; ?>
+
+

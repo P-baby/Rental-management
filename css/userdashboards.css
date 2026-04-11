@@ -145,6 +145,29 @@ body{
     color: #fff;
 }
 
+#toast {
+    display: none;
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 6px;
+    z-index: 9999;
+    font-size: 17px;
+    min-width: 140px;
+    text-align: center;
+    opacity: 0.95;
+}
+#toast.show {
+    display: block;
+    animation: fadein 0.3s, fadeout 0.3s 2.7s;
+}
+@keyframes fadein { from { opacity: 0; } to { opacity: 0.95; } }
+@keyframes fadeout { from { opacity: 0.95; } to { opacity: 0; } }
+
 .userdashboard_footer {
     text-align: center;
     padding: 10px;
