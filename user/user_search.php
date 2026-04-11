@@ -65,17 +65,25 @@ $stmt->close();
 </form>
 
 <?php if (!empty($tools)): ?>
-    <ul>
+    <div class="tools_container">
         <?php foreach ($tools as $tool): ?>
-            <li>
-                <h3><?php echo htmlspecialchars($tool['tool_name']); ?></h3>
-                <img src="../images/<?php echo rawurlencode(basename($tool['image'])); ?>" alt="<?php echo htmlspecialchars($tool['tool_name']); ?>" width="100">
-                <p>Category: <?php echo htmlspecialchars($tool['category']); ?></p>
-                <p>Status: <?php echo htmlspecialchars($tool['condition_status']); ?></p>
-                <p>Quantity: <?php echo (int)$tool['quantity']; ?></p>
-            </li>
+            <div class="tool_card">
+                <div class="tool_image">
+                    <img src="../images/<?php echo rawurlencode(basename($tool['image'])); ?>" alt="<?php echo htmlspecialchars($tool['tool_name']); ?>" width="100">
+                </div>
+                <div class="tool_info">
+                    <h3><?php echo htmlspecialchars($tool['tool_name']); ?></h3>
+                    <p>Category: <?php echo htmlspecialchars($tool['category']); ?></p>
+                    <p>Status: <?php echo htmlspecialchars($tool['condition_status']); ?></p>
+                    <p>Quantity: <?php echo (int)$tool['quantity']; ?></p>
+                </div>
+                <div class="tool_actions">
+                    <button onclick="loadPage('rent.php?tool_id=<?php echo (int)$tool['tool_id']; ?>')" class="rent_button">Rent</button>
+                </div>
+
+            </div>
         <?php endforeach; ?>
-    </ul>
+    </div>
 <?php else: ?>
     <p>No equipment found.</p>
 <?php endif; ?>

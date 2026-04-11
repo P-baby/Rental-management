@@ -1,0 +1,31 @@
+.rental_records_container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.rental_records_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+}
+
+.rental_records_table th, .rental_records_table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 8px;
+    text-align: center;
+}
+
+.rental_records_table th {
+    background: #f3f9f5;
+    color: #1a4232;
+    font-weight: 700;
+}
+
+.rental_records_table tr:nth-child(even) {
+    background: #fafbfc;
+}

@@ -1,3 +1,9 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
 .userdashboard_maincontainer {
     display: flex;
     flex-direction: column;
@@ -76,12 +82,76 @@
     margin-left: 20px;
 }
 
+.tools_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.tool_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+}
+
+.tool_image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.tool_info {
+    margin-top: 10px;
+}
+
+.tool_info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #115e3a;
+}
+
+.tool_actions {
+    margin-top: 10px;
+}
+.rent_button {
+    background-color: #1a4232;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.rentals_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.rentals_table th, .rentals_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.rentals_table th {
+    background-color: #1a4232;
+    color: #fff;
+}
+
 .userdashboard_footer {
     text-align: center;
     padding: 10px;
     background-color: #1a4232;
     color: #fff;
-    
+    position: fixed;
+    bottom: 0;
     margin-top: 20px;
     width: 100%;
 }

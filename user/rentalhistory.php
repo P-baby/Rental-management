@@ -36,15 +36,35 @@ $stmt->close();
 <h1>Rental History</h1>
 
 <?php if (!empty($rental_history)): ?>
-    <div class="rentals_list">
+    <table class="rentals_table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Tool Name</th>
+                <th>Rented On</th>
+                <th>Due On</th>
+                <th>Returned On</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
         <?php foreach ($rental_history as $rental): ?>
-            <div class="rental_item">
-                <img src="../images/<?php echo rawurlencode(basename($rental['image'])); ?>" alt="<?php echo htmlspecialchars($rental['tool_name']); ?>" class="rental_image">
-                <h3><?php echo htmlspecialchars($rental['tool_name']); ?></h3>
-                <p>Rented on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rent_datetime']))); ?></p>
-                <p>Due on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_datetime']))); ?></p>
-                <p>Returned on: <?php echo $rental['return_datetime'] ? htmlspecialchars(date("F j, Y", strtotime($rental['return_datetime']))) : 'Not returned yet'; ?></p>
-                <p>Status:
+            <tr>
+                <td>
+                    <img src="../images/<?php echo rawurlencode(basename($rental['image'])); ?>"
+                         alt="<?php echo htmlspecialchars($rental['tool_name']); ?>"
+                         style="width:60px; border-radius:5px;">
+                </td>
+                <td><?php echo htmlspecialchars($rental['tool_name']); ?></td>
+                <td><?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rent_datetime']))); ?></td>
+                <td><?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_datetime']))); ?></td>
+                <td>
+                    <?php echo $rental['return_datetime']
+                        ? htmlspecialchars(date("F j, Y", strtotime($rental['return_datetime'])))
+                        : 'Not returned yet';
+                    ?>
+                </td>
+                <td>
                     <?php
                     if (!$rental['return_datetime'] && strtotime($rental['due_datetime']) < time()) {
                         echo "<span style='color: red;'>Overdue</span>";
@@ -54,10 +74,11 @@ $stmt->close();
                         echo "<span style='color: orange;'>Not returned yet</span>";
                     }
                     ?>
-                </p>
-            </div>
+                </td>
+            </tr>
         <?php endforeach; ?>
-    </div>
+        </tbody>
+    </table>
 <?php else: ?>
     <p>No rental history found.</p>
 <?php endif; ?>

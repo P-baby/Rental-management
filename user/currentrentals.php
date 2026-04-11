@@ -37,20 +37,37 @@ $stmt->close();
 <h1>Current Rentals</h1>
 
 <?php if (!empty($current_rentals)): ?>
-    <div class="rentals_list">
+    <table class="rentals_table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Tool Name</th>
+                <th>Rented On</th>
+                <th>Due On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
         <?php foreach ($current_rentals as $rental): ?>
-            <div class="rental_item">
-                <img src="../images/<?php echo rawurlencode(basename($rental['image'])); ?>" alt="<?php echo htmlspecialchars($rental['tool_name']); ?>" class="rental_image">
-                <h3><?php echo htmlspecialchars($rental['tool_name']); ?></h3>
-                <p>Rented on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rent_datetime']))); ?></p>
-                <p>Due on: <?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_datetime']))); ?></p>
-                <form method="POST" action="return_tool.php">
-                    <input type="hidden" name="tool_id" value="<?php echo (int)$rental['tool_id']; ?>">
-                    <button type="submit">Return this tool</button>
-                </form>
-            </div>
+            <tr>
+                <td>
+                    <img src="../images/<?php echo rawurlencode(basename($rental['image'])); ?>"
+                         alt="<?php echo htmlspecialchars($rental['tool_name']); ?>"
+                         style="width:60px; border-radius:5px;">
+                </td>
+                <td><?php echo htmlspecialchars($rental['tool_name']); ?></td>
+                <td><?php echo htmlspecialchars(date("F j, Y", strtotime($rental['rent_datetime']))); ?></td>
+                <td><?php echo htmlspecialchars(date("F j, Y", strtotime($rental['due_datetime']))); ?></td>
+                <td>
+                    <form method="POST" action="return_tool.php" class="return_form">
+                        <input type="hidden" name="tool_id" value="<?php echo (int)$rental['tool_id']; ?>">
+                        <button type="submit" class="return_btn">Return</button>
+                    </form>
+                </td>
+            </tr>
         <?php endforeach; ?>
-    </div>
+        </tbody>
+    </table>
 <?php else: ?>
     <p>No current rentals found.</p>
 <?php endif; ?>
