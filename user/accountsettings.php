@@ -35,6 +35,8 @@ $stmt->close();
       <input type="text" id="first_name" name="first_name" value="<?php echo htmlspecialchars($user['first_name']); ?>" required>   
         <label for="last_name">Last Name:</label>
         <input type="text" id="last_name" name="last_name" value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
         <button type="submit" class="save-changes-btn">Save Changes</button>
