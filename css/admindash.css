@@ -15,7 +15,20 @@
     left: 0;
     height: 100%;
     border-right: #023217 2px solid;
+    transition: width 0.3s ease;
 }
+
+
+.siderbar_toggle_btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: none; /* Hidden by default, shown on smaller screens */
+}
+
+
 
 .dashboard_userinfo {
     font-size: 30px;
@@ -132,11 +145,16 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px;
     flex: 1 1 calc(33.333% - 40px);
-    min-width: 220px;
-    max-width: 350px;
+    width: calc(33.333% - 40px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+    transform: translate(-5px);
+    background-color: #03570bd1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card h3 {

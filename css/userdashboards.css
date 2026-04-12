@@ -28,11 +28,19 @@ body{
     align-items: center;
     margin-bottom: 20px;
 }
+.userdashboard_sidebar_user {
+    align-self: center;
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: #023217 2px solid;
+    padding-bottom: 20px;
+}
 .userdashboard_sidebar_user img {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     margin-bottom: 10px;
+    object-fit: cover;
 }
 .userdashboard_sidebar_menu_list {
     list-style: none;
@@ -40,6 +48,8 @@ body{
     margin: 0;
     font-size: 18px;
     gap: 15px;
+    display: flex;
+    flex-direction: column;
 }
 .userdashboard_sidebar_menu_list li {
     margin-bottom: 15px;
@@ -47,12 +57,14 @@ body{
 .userdashboard_sidebar_menu_list li a {
     color: #fff;
     text-decoration: none;
-    display: block;
-    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px;
     border-radius: 5px;
 }
 .userdashboard_sidebar_menu_list li a.active {
-    background-color: #555;
+    background-color: #128a14;
 }
 .userdashboard_sidebar_menu_list li a:hover {
     color: #fff;
@@ -99,6 +111,12 @@ body{
     padding: 15px;
     width: 200px;
     text-align: center;
+    transition: transform 0.2s; 
+}
+.tool_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    background: #f7faff;
 }
 
 .tool_image img {
@@ -171,7 +189,7 @@ body{
 .userdashboard_footer {
     text-align: center;
     padding: 10px;
-    background-color: #1a4232;
+    
     color: #fff;
     position: fixed;
     bottom: 0;

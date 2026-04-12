@@ -32,11 +32,39 @@ if (mysqli_num_rows($result) > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rental Records</title>
     <link rel="stylesheet" href="css/rentala.css">
+    <style>
+        #rental_records_container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(11, 3, 3, 0.1);
+        }
+        #rental_records_table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #rental_records_table th, #rental_records_table td {
+            padding: 12px;
+            border: 1px solid #27946c;
+            text-align: left;
+        }
+        #rental_records_table th {
+            background-color: #062818a4;
+        }
+        #rental_records_table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        #rental_records_table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
-    <div class="rental_records_container">
+    <div id="rental_records_container">
         <h2>Rental Records</h2>
-        <table class="rental_records_table">
+        <table id="rental_records_table">
             <thead>
                 <tr>
                     <th>Rental ID</th>

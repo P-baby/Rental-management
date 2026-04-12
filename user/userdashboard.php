@@ -70,8 +70,9 @@ $stmt->close();
         <div class="userdashboard_sidebar">
             <h2 class="userdashboard_userinfo">Hi, <?php echo htmlspecialchars($first_name); ?></h2>
             <div class="userdashboard_sidebar_user">
-                <img src="../images/user.jpeg" alt="User Image" class="userdashboard_sidebar_user_image">
+                <img src="../images/profile.jpeg" alt="User Image" class="userdashboard_sidebar_user_image">
             </div>
+            
             <div class="userdashboard_sidebar_menu">
                 <ul class="userdashboard_sidebar_menu_list">
                     <li><a href="#" onclick="loadPage('userdashboard_home.php'); return false;" class="fas fa-dashboard">Dashboard</a></li>
@@ -111,111 +112,128 @@ $stmt->close();
 
  <!-- JavaScript for AJAX content loading -->
     <script>
-        // Keep this global so the inline sidebar onclick handlers can reach it.
         function loadPage(page) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', page, true);
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    document.getElementById('content_area').innerHTML = this.responseText;
-                } else {
-                    document.getElementById('content_area').innerHTML = '<p>Error loading page.</p>';
-                }
-            };
-            xhr.send();
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', page, true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            document.getElementById('content_area').innerHTML = this.responseText;
+        } else {
+            document.getElementById('content_area').innerHTML = '<p>Error loading page.</p>';
         }
-        //ajax for rent.php in content area
-        document.addEventListener('submit', function(e) {
-            if (e.target && e.target.id === 'rentForm') {
-                e.preventDefault();
-                const form = e.target;
-                const tool_id = form.querySelector('input[name="tool_id"]').value;
+    };
+    xhr.send();
+}
 
-                fetch('rent.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({ tool_id }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    showToast(data.message, data.success ? 'success' : 'error'  );
-                    if (data.success) {
-                        //remove the card
-                        form.closest('.rent_confirm_card').remove();
-                        // Refresh current rentals list
-                        loadPage('currentrentals.php');
-                    } else {
-                        showToast(data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showToast('An error occurred while processing your rental.');
-                });
+    // --------- Delegated form submissions (RENT / RETURN / PROFILE) ----------
+    document.addEventListener('submit', function(e) {
+    // Rent
+    if (e.target && e.target.id === 'rentForm') {
+        e.preventDefault();
+        const form = e.target;
+        const tool_id = form.querySelector('input[name="tool_id"]').value;
+        fetch('rent.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ tool_id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            showToast(data.message, data.success ? 'success' : 'error');
+            if (data.success) {
+                form.closest('.rent_confirm_card').remove();
+                loadPage('currentrentals.php');
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast('An error occurred while processing your rental.', 'error');
         });
+    }
 
-        //ajax for return_form in content area
-        document.addEventListener('submit', function(e) {
-            if (e.target && e.target.classList.contains('return_form')) {
-                e.preventDefault();
-                const form = e.target;
-                const tool_id = form.querySelector('input[name="tool_id"]').value;
+    // Return
+    if (e.target && e.target.classList.contains('return_form')) {
+        e.preventDefault();
+        const form = e.target;
+        const tool_id = form.querySelector('input[name="tool_id"]').value;
+        fetch('return_tool.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ tool_id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            showToast(data.message, data.success ? 'success' : 'error');
+            if (data.success) loadPage('currentrentals.php');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast('An error occurred while returning the tool.', 'error');
+        });
+    }
 
-                fetch('return_tool.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({ tool_id }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast(data.message);
-                        // Refresh current rentals list
-                        loadPage('currentrentals.php');
-                    } else {
-                        showToast(data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showToast('An error occurred while returning the tool.');
-                });
+    // Profile Save
+    if (e.target && e.target.id === 'editProfileForm') {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        fetch('update_profile.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            showToast(data.message, data.success ? 'success' : 'error');
+            if (data.success) {
+                document.getElementById('editProfileModal').style.display = 'none';
+                loadPage('accountsettings.php'); // Optionally refresh profile section
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast('An error occurred while updating your profile.', 'error');
         });
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+    }
+});
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var rightNav = document.querySelector('.topnav_right');
-            if (rightNav) {
-                rightNav.addEventListener('click', function() {
-                    alert('You have ' + <?php echo $overdue_count; ?> + ' overdue rentals and ' + <?php echo $active_count; ?> + ' active rentals.');
-                });
-            }
+// --------- Delegated click events (MODAL) ----------
+document.addEventListener('click', function(e) {
+    // Show edit profile modal
+    if (e.target && e.target.id === 'editProfileBtn') {
+        document.getElementById('editProfileModal').style.display = 'block';
+    }
+    // Close modal
+    if (e.target && e.target.classList.contains('close')) {
+        document.getElementById('editProfileModal').style.display = 'none';
+    }
+});
 
-            // Load the default dashboard partial after the page shell is ready.
-            loadPage('userdashboard_home.php');
+// --------- Toast UI ----------
+function showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'show ' + type;
+    setTimeout(() => {
+        toast.className = toast.className.replace('show', '').trim();
+    }, 3000);
+}
 
-            // Highlight the active menu item on click.
-            const navLinks = document.querySelectorAll('.userdashboard_sidebar_menu_list a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
+// --------- DOMContentLoaded ONLY for static setup ---------
+document.addEventListener('DOMContentLoaded', function() {
+    var rightNav = document.querySelector('.topnav_right');
+    if (rightNav) {
+        rightNav.addEventListener('click', function() {
+            alert('You have ' + <?php echo $overdue_count; ?> + ' overdue rentals and ' + <?php echo $active_count; ?> + ' active rentals.');
         });
+    }
+    loadPage('userdashboard_home.php');
+    const navLinks = document.querySelectorAll('.userdashboard_sidebar_menu_list a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
     </script>
 </body>
 </html>

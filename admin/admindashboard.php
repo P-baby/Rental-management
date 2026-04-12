@@ -29,7 +29,7 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
 <div class="dashboard_maincontainer">
-    <div class="dashboard_sidebar">
+    <div class="dashboard_sidebar" id="adminsidebar">
         <h2 class="dashboard_userinfo">Hi, <?php if (isset($_SESSION['first_name'])) { echo htmlspecialchars($_SESSION['first_name']); } else { echo "Admin"; } ?></h2>
         <div class="dashboard_sidebar_user">
             <img src="../images/admin.jpeg" alt="User Image" class="dashboard_sidebar_user_image">
@@ -53,7 +53,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
     <div class="dashboard_content_container">
         <div class="dashboard__topnav">
-            <a href="#"><i class="fas fa-bars"></i></a>
+            <button id="sidebarToggle" class="sidebar_toggle_btn"><i class="fas fa-bars"></i></button>
             <div class="topnav_right"><a href="#"><i class="fas fa-bell"></i></a>
                 <a href="../logout.php"><i class="fas fa-power-off"></i>Logout</a>
             </div>
@@ -112,7 +112,6 @@ function loadPage(page){
         document.getElementById("dashboard_content_main").innerHTML = data;
     });
 }
-
 // Data for JS
 const overviewLabels = ['Users', 'Tools', 'Rentals'];
 const overviewData = [
